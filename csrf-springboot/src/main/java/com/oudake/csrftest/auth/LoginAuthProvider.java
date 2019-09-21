@@ -36,7 +36,7 @@ public class LoginAuthProvider implements AuthenticationProvider {
         if (!isValid) {
             throw new BadCredentialsException("登录密码错误");
         }
-        return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(), authentication.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(), userDetails.getAuthorities());
     }
 
     @Override
