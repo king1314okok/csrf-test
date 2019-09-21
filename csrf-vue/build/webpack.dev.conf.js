@@ -75,8 +75,6 @@ module.exports = new Promise((resolve, reject) => {
       reject(err)
     } else {
       // publish the new Port, necessary for e2e tests
-      // 切换端口
-      port = config.dev.port;
       process.env.PORT = port
       // add port to devServer config
       devWebpackConfig.devServer.port = port
