@@ -31,7 +31,7 @@
         <javaClientGenerator targetPackage="com.oudake.csrftest.dao"
                              targetProject="src\main\java" type="XMLMAPPER" />
         <!-- 数据表 -->
-        <table tableName="user"
+        <table tableName="role_permission"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" />
 
