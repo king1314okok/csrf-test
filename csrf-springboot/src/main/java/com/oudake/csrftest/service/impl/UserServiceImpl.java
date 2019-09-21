@@ -1,11 +1,11 @@
 package com.oudake.csrftest.service.impl;
 
 import com.oudake.csrftest.dao.UserMapper;
-import com.oudake.csrftest.model.CustomUser;
 import com.oudake.csrftest.model.User;
 import com.oudake.csrftest.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * @author wangyi
@@ -17,11 +17,11 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
-    public CustomUser findUserByUsername(String username) {
-        if ("king".equals(username)) {
-            return new CustomUser("1", "king", "111");
-        }
-        return null;
+    public User findUserByUsername(String username) {
+        Example example = new Example(User.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("username", username);
+        return userMapper.selectOneByExample(example);
     }
 
     @Override

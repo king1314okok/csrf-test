@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import tk.mybatis.spring.annotation.MapperScan;
 
+/**
+ * @author wangyi
+ */
 @SpringBootApplication
 @EnableWebSecurity
 @MapperScan(basePackages = {"com.oudake.csrftest.dao"})

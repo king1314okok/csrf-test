@@ -1,6 +1,5 @@
 package com.oudake.csrftest.auth;
 
-import com.oudake.csrftest.model.CustomUser;
 import com.oudake.csrftest.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,13 +30,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        CustomUser customUser = userService.findUserByUsername(username);
-        if (customUser == null) {
+        com.oudake.csrftest.model.User user = userService.findUserByUsername(username);
+        if (user == null) {
             throw new UsernameNotFoundException("用户:" + username + "不存在");
         }
-        User user = new User(username, passwordEncoder.encode(customUser.getPassword()),
+        return new User(username, passwordEncoder.encode(user.getPassword()),
                 true, true, true, true,
                 AuthorityUtils.commaSeparatedStringToAuthorityList("ADMIN"));
-        return user;
     }
 }
