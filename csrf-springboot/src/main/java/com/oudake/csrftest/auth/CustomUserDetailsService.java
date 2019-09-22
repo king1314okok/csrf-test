@@ -1,7 +1,7 @@
 package com.oudake.csrftest.auth;
 
-import com.oudake.csrftest.model.Role;
-import com.oudake.csrftest.service.IRoleService;
+import com.oudake.csrftest.model.Permission;
+import com.oudake.csrftest.service.IPermissionService;
 import com.oudake.csrftest.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private IUserService userService;
     @Autowired
-    private IRoleService roleService;
+    private IPermissionService permissionService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -43,9 +43,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("用户:" + username + "不存在");
         } else {
-            List<Role> roleList = roleService.findRolesByUserId(user.getId());
-            for (Role role : roleList) {
-                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getRoleName());
+            List<Permission> permissionList = permissionService.findPermissionsByUserId(user.getId());
+            for (Permission permission : permissionList) {
+                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(permission.getName());
                 // 此处将权限信息添加到 GrantedAuthority 对象中，在后面进行全权限验证时会使用GrantedAuthority对象。
                 grantedAuthorityList.add(grantedAuthority);
             }

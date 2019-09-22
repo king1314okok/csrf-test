@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 /**
  * @author wangyi
@@ -24,11 +25,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private LoginAuthProvider loginAuthProvider;
     @Autowired
     private CustomAuthEntryPoint customAuthEntryPoint;
+    @Autowired
+    private CustomPermissionInterceptor customPermissionInterceptor;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .authenticationProvider(loginAuthProvider);
+        auth.authenticationProvider(loginAuthProvider);
     }
 
     @Override
@@ -47,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .logout().permitAll()
             .and()
-                .exceptionHandling().authenticationEntryPoint(customAuthEntryPoint);
+                .exceptionHandling().authenticationEntryPoint(customAuthEntryPoint).accessDeniedHandler(new CustomAccessDeniedHandler());
+        http.addFilterBefore(customPermissionInterceptor, FilterSecurityInterceptor.class);
     }
 }

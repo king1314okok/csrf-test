@@ -21,4 +21,14 @@ public class PermissionServiceImpl implements IPermissionService {
     public List<Permission> findPermissionsByUserId(Integer id) {
         return permissionMapper.findPermissionsByUserId(id);
     }
+
+    @Override
+    public List<Permission> findPermissionsByRoleId(Integer id) {
+        return permissionMapper.findPermissionsByRoleId(id);
+    }
+
+    @Override
+    public List<Permission> findAllPermissions() {
+        return permissionMapper.selectAll();
+    }
 }

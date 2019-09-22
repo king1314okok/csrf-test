@@ -14,7 +14,7 @@
 
     <select id="findPermissionsByUserId" parameterType="Integer" resultMap="BaseResultMap">
     SELECT
-        t4.*
+    DISTINCT t4.*
     FROM
         USER t1
         JOIN role_user t2 ON t1.id = t2.user_id

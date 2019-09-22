@@ -9,4 +9,8 @@ import java.util.List;
  */
 public interface IPermissionService {
     List<Permission> findPermissionsByUserId(Integer id);
+
+    List<Permission> findPermissionsByRoleId(Integer id);
+
+    List<Permission> findAllPermissions();
 }

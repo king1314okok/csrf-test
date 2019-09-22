@@ -9,4 +9,6 @@ import java.util.List;
 public interface PermissionMapper extends Mapper<Permission> {
 
     List<Permission> findPermissionsByUserId(@Param("id") Integer id);
+
+    List<Permission> findPermissionsByRoleId(@Param("id") Integer id);
 }
