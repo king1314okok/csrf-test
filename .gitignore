@@ -2,6 +2,6 @@ mvnw.cmd
 .idea
 .mvn
 target
-csrf-test.iml
+*.iml
 HELP.md
 mvnw
