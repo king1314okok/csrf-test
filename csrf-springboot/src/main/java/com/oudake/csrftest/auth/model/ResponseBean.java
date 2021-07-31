@@ -1,16 +1,14 @@
-package com.oudake.csrftest.model;
-
-import java.io.Serializable;
+package com.oudake.csrftest.auth.model;
 
 /**
  * @author wangyi
  */
-public class ResponseBean implements Serializable {
+public class ResponseBean <T> {
 
     private Boolean success;
     private String code;
     private String msg;
-    private Object result;
+    private T result;
 
     public ResponseBean() {
     }
@@ -21,7 +19,7 @@ public class ResponseBean implements Serializable {
         this.msg = msg;
     }
 
-    public ResponseBean(Boolean success, String code, String msg, Object result) {
+    public ResponseBean(Boolean success, String code, String msg, T result) {
         this.success = success;
         this.code = code;
         this.msg = msg;
@@ -56,7 +54,7 @@ public class ResponseBean implements Serializable {
         return result;
     }
 
-    public void setResult(Object result) {
+    public void setResult(T result) {
         this.result = result;
     }
 }

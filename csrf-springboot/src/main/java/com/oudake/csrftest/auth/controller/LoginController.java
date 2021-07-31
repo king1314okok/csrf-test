@@ -1,6 +1,6 @@
-package com.oudake.csrftest.controller;
+package com.oudake.csrftest.auth.controller;
 
-import com.oudake.csrftest.model.ResponseBean;
+import com.oudake.csrftest.auth.model.ResponseBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    @PostMapping("loginStatus")
-    public ResponseBean loginStatus(Authentication authentication) {
+    @PostMapping("userInfo")
+    public ResponseBean userInfo(Authentication authentication) {
         return new ResponseBean(true, "00", "用户:" + authentication.getName() + "已登录");
     }
 

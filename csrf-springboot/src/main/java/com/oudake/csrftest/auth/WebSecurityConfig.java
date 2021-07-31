@@ -6,31 +6,21 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 /**
  * @author wangyi
  */
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled =true, jsr250Enabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String LOGIN_PROCESS_URL = "/doLogin";
-
     @Autowired
-    private LoginAuthSuccessHandler loginAuthSuccessHandler;
-    @Autowired
-    private LoginAuthFailHandler loginAuthFailHandler;
-    @Autowired
-    private LoginAuthProvider loginAuthProvider;
-    @Autowired
-    private CustomAuthEntryPoint customAuthEntryPoint;
-    @Autowired
-    private CustomPermissionInterceptor customPermissionInterceptor;
+    private LoginAuthenticationProvider authenticationProvider;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(loginAuthProvider);
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(authenticationProvider);
     }
 
     @Override
@@ -39,17 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .anyRequest().authenticated()
-            .and()
-                .formLogin()
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .loginProcessingUrl(LOGIN_PROCESS_URL)
-                .successHandler(loginAuthSuccessHandler)
-                .failureHandler(loginAuthFailHandler)
-            .and()
-                .logout().permitAll()
-            .and()
-                .exceptionHandling().authenticationEntryPoint(customAuthEntryPoint).accessDeniedHandler(new CustomAccessDeniedHandler());
-        http.addFilterBefore(customPermissionInterceptor, FilterSecurityInterceptor.class);
+                .and()
+                .addFilter(new LoginAuthenticationFilter(authenticationManager()))
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 }
