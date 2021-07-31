@@ -51,7 +51,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         response.setContentType(MediaType.APPLICATION_JSON_UTF8.toString());
         Writer writer = response.getWriter();
-        ResponseBean<Void> responseBean = new ResponseBean<>(true, "0", "登录失败, " + failed);
+        ResponseBean<Void> responseBean = new ResponseBean<>(true, "0", "登录失败, " + failed.getMessage());
         writer.write(JSON.toJSONString(responseBean));
         writer.flush();
         writer.close();

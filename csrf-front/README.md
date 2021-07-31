@@ -1,4 +1,4 @@
-# csrf-vue
+# csrf-front
 
 ## Project setup
 ```
