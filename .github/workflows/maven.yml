@@ -24,3 +24,9 @@ jobs:
       run: mvn -B package --file csrf-api/pom.xml
     - name: Npm install && build
       run: cd csrf-front && npm install && npm run build
+    - name: Publish to Docker Repository
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: king1314okok/csrf-test
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
