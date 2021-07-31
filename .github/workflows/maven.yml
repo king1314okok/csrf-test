@@ -11,9 +11,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
@@ -23,4 +21,6 @@ jobs:
     - name: ls
       run: ls
     - name: Build with Maven
-      run: mvn -B package --file csrf-springboot/pom.xml
+      run: mvn -B package --file csrf-api/pom.xml
+    - name: Build with Npm
+      run: cd csrf-front && npm run build
