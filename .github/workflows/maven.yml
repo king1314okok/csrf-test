@@ -22,5 +22,5 @@ jobs:
       run: ls
     - name: Build with Maven
       run: mvn -B package --file csrf-api/pom.xml
-    - name: Build with Npm
-      run: cd csrf-front && npm run build
+    - name: Npm install && build
+      run: cd csrf-front && npm run install && npm run build
