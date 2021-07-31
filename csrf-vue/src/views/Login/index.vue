@@ -13,39 +13,37 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from 'axios'
 import qs from 'qs'
+import md5 from 'md5'
 
 export default {
-  name: "login",
+  name: 'login',
   data () {
     return {
       form: {
-        username: "",
-        password: ""
+        username: '',
+        password: ''
       }
-    };
+    }
   },
   methods: {
     login () {
-      axios.post('/csrf/doLogin', qs.stringify(this.form)).then(res => {
+      const password = md5(this.form.password)
+      axios.post('/login', qs.stringify({ username: this.form.username, password: password })).then(res => {
         const data = res.data
+        console.log(data)
         if (!data.success) {
           this.$message(data.msg)
         } else {
           this.$message(data.msg)
-          sessionStorage.setItem('loginStatus',JSON.stringify(res.data.result))
-          setTimeout(() => {
-            window.location = '/'
-          }, 1000)
         }
-        console.log(data)
       }).catch(error => {
         console.log(error)
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>
